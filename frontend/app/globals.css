@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@layer components {
+    @keyframes marqueeScroll {
+        0% {
+            transform: translateX(0%);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    @keyframes appLoaderSlide {
+        0% {
+            transform: translateX(-120%);
+        }
+        60% {
+            transform: translateX(120%);
+        }
+        100% {
+            transform: translateX(220%);
+        }
+    }
+}
+
+@layer base {
+    body {
+        @apply bg-white text-slate-900;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    a {
+        @apply transition-colors;
+    }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.animate-app-loader-slide {
+    animation: appLoaderSlide 1.2s ease-in-out infinite;
+}
+
+.container-electronics {
+    @apply mx-auto w-full max-w-screen-2xl px-4 sm:px-8;
+}
