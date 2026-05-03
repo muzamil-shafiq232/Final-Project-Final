@@ -4,7 +4,7 @@ Laravel API foundation with MySQL + Sanctum token auth.
 
 ## Implemented
 
-- Laravel **13.x** backend project (`backend/`)
+- Laravel **13.x** backend project (`apps/api/`)
 - MySQL environment configured in `.env` / `.env.example`
 - Sanctum installed and configured
 - API routing structure under `routes/api.php` with `/api/v1/*`
@@ -91,6 +91,7 @@ Laravel API foundation with MySQL + Sanctum token auth.
 3. Install dependencies:
 
 ```bash
+cd apps/api
 composer install
 ```
 

@@ -15,7 +15,9 @@ return new class extends Migration
             return;
         }
 
-        DB::statement("ALTER TABLE orders MODIFY status VARCHAR(40) NOT NULL DEFAULT 'pending'");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE orders MODIFY status VARCHAR(40) NOT NULL DEFAULT 'pending'");
+        }
     }
 
     /**
@@ -31,6 +33,8 @@ return new class extends Migration
             ->whereNotIn('status', ['pending', 'paid', 'shipped', 'delivered', 'cancelled', 'refunded'])
             ->update(['status' => 'pending']);
 
-        DB::statement("ALTER TABLE orders MODIFY status ENUM('pending','paid','shipped','delivered','cancelled','refunded') NOT NULL DEFAULT 'pending'");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE orders MODIFY status ENUM('pending','paid','shipped','delivered','cancelled','refunded') NOT NULL DEFAULT 'pending'");
+        }
     }
 };

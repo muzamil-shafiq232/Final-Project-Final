@@ -133,7 +133,7 @@ class OrderSeeder extends Seeder
                     DB::table('products')
                         ->where('id', $lineItem['product_id'])
                         ->update([
-                            'stock' => DB::raw('GREATEST(stock - '.(int) $lineItem['quantity'].', 0)'),
+                            'stock' => DB::raw('CASE WHEN stock - '.(int) $lineItem['quantity'].' < 0 THEN 0 ELSE stock - '.(int) $lineItem['quantity'].' END'),
                         ]);
                 }
             }

@@ -28,16 +28,6 @@ const normalizeImageUrl = (imageUrl) => {
     return `${API_ORIGIN}/${trimmed.replace(/^\/+/, '')}`
   }
 
-  try {
-    const parsed = new URL(trimmed)
-    const path = parsed.pathname || ''
-    if (path.startsWith('/storage/')) {
-      return `${API_ORIGIN}${path}${parsed.search || ''}`
-    }
-  } catch {
-    return trimmed
-  }
-
   return trimmed
 }
 

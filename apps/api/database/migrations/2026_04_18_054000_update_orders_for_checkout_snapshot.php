@@ -12,6 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        $driver = DB::getDriverName();
+
         if (!Schema::hasColumn('orders', 'payment_method')) {
             Schema::table('orders', function (Blueprint $table): void {
                 $table->string('payment_method', 40)->default('COD')->after('payment_status');
@@ -62,7 +64,9 @@ return new class extends Migration
             ->where('status', 'processing')
             ->update(['status' => 'pending']);
 
-        DB::statement("ALTER TABLE orders MODIFY status ENUM('pending','paid','shipped','delivered','cancelled','refunded') NOT NULL DEFAULT 'pending'");
+        if ($driver !== 'sqlite') {
+            DB::statement("ALTER TABLE orders MODIFY status ENUM('pending','paid','shipped','delivered','cancelled','refunded') NOT NULL DEFAULT 'pending'");
+        }
     }
 
     /**
@@ -70,7 +74,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::statement("ALTER TABLE orders MODIFY status ENUM('pending','processing','shipped','delivered','cancelled','refunded') NOT NULL DEFAULT 'pending'");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE orders MODIFY status ENUM('pending','processing','shipped','delivered','cancelled','refunded') NOT NULL DEFAULT 'pending'");
+        }
 
         Schema::table('orders', function (Blueprint $table): void {
             $table->dropColumn([

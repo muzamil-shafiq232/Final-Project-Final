@@ -6,6 +6,7 @@ Next.js storefront + admin frontend using the Electronics template UI, integrate
 
 1. Install dependencies:
    ```bash
+   cd apps/web
    npm install
    ```
 
